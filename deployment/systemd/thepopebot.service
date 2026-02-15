@@ -1,0 +1,51 @@
+[Unit]
+Description=thepopebot Event Handler
+Documentation=https://github.com/yourusername/thepopebot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=thepopebot
+Group=thepopebot
+WorkingDirectory=/opt/thepopebot
+Environment=NODE_ENV=production
+
+# Load environment variables from config file
+EnvironmentFile=/etc/thepopebot/thepopebot.env
+
+# Start the event handler
+ExecStart=/usr/bin/node event_handler/server.js
+
+# Restart policy
+Restart=always
+RestartSec=10
+StartLimitBurst=5
+StartLimitInterval=300
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/thepopebot/logs /opt/thepopebot/event_handler/cron /opt/thepopebot/event_handler/triggers
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictRealtime=true
+RestrictNamespaces=true
+LockPersonality=true
+MemoryDenyWriteExecute=false
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+
+# Resource limits
+LimitNOFILE=65536
+TasksMax=4096
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=thepopebot
+
+[Install]
+WantedBy=multi-user.target
