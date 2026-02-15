@@ -1,0 +1,107 @@
+[Unit]
+Description=thepopebot Event Handler - Autonomous AI Agent System
+Documentation=https://github.com/stephengpope/thepopebot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+
+# CUSTOMIZE THIS: Your system username
+# Run 'whoami' to find your username
+User=YOUR_USERNAME
+
+# CUSTOMIZE THIS: Full path to event_handler directory
+# Example: /home/username/thepopebot/event_handler
+WorkingDirectory=/FULL/PATH/TO/thepopebot/event_handler
+
+# Environment
+Environment="NODE_ENV=production"
+
+# CUSTOMIZE THIS: Full path to .env file
+# Should match WorkingDirectory above
+EnvironmentFile=/FULL/PATH/TO/thepopebot/event_handler/.env
+
+# CUSTOMIZE THIS: Full path to node binary
+# Run 'which node' to find the path
+# Common paths: /usr/bin/node, /usr/local/bin/node, /home/username/.nvm/versions/node/vXX.X.X/bin/node
+ExecStart=/FULL/PATH/TO/node server.js
+
+# Restart behavior
+Restart=always
+RestartSec=10
+StartLimitBurst=5
+StartLimitIntervalSec=300
+
+# Logging
+StandardOutput=append:/var/log/thepopebot/output.log
+StandardError=append:/var/log/thepopebot/error.log
+SyslogIdentifier=thepopebot
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+
+# CUSTOMIZE THIS: Full path to repository root
+# Allows the service to read/write to the repository
+ReadWritePaths=/FULL/PATH/TO/thepopebot
+
+# Allow writing to log directory
+ReadWritePaths=/var/log/thepopebot
+
+# Resource limits (optional but recommended)
+# Prevent runaway memory usage
+MemoryMax=1G
+# Limit CPU time (10 minutes per CPU-second)
+CPUQuota=50%
+
+[Install]
+WantedBy=multi-user.target
+
+# ==============================================================================
+# INSTALLATION INSTRUCTIONS
+# ==============================================================================
+#
+# 1. CUSTOMIZE THIS FILE
+#    Replace all placeholders marked with CUSTOMIZE THIS above:
+#    - YOUR_USERNAME: Your system username (run: whoami)
+#    - /FULL/PATH/TO/thepopebot: Absolute path to repository (run: pwd)
+#    - /FULL/PATH/TO/node: Full path to node binary (run: which node)
+#
+# 2. CREATE LOG DIRECTORY
+#    sudo mkdir -p /var/log/thepopebot
+#    sudo chown YOUR_USERNAME:YOUR_USERNAME /var/log/thepopebot
+#    sudo chmod 755 /var/log/thepopebot
+#
+# 3. COPY TO SYSTEMD
+#    sudo cp thepopebot.service /etc/systemd/system/thepopebot.service
+#    sudo chmod 644 /etc/systemd/system/thepopebot.service
+#
+# 4. RELOAD SYSTEMD
+#    sudo systemctl daemon-reload
+#
+# 5. START SERVICE
+#    sudo systemctl start thepopebot
+#    systemctl status thepopebot
+#
+# 6. CHECK LOGS
+#    sudo journalctl -u thepopebot -f
+#    tail -f /var/log/thepopebot/output.log
+#
+# 7. ENABLE AUTO-START (after testing)
+#    sudo systemctl enable thepopebot
+#
+# ==============================================================================
+# MANAGEMENT COMMANDS
+# ==============================================================================
+#
+# Start:     sudo systemctl start thepopebot
+# Stop:      sudo systemctl stop thepopebot
+# Restart:   sudo systemctl restart thepopebot
+# Status:    systemctl status thepopebot
+# Logs:      sudo journalctl -u thepopebot -f
+# Enable:    sudo systemctl enable thepopebot
+# Disable:   sudo systemctl disable thepopebot
+#
