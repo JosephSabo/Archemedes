@@ -1,0 +1,1 @@
+Check what files currently exist in the deployment/systemd directory of the repository. List all files, show their contents, and identify which script should be used for deployment. Look for install.sh, deploy.sh, or any other installation/deployment scripts. Provide clear instructions on which file to run and what it does.
