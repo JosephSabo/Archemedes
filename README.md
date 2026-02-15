@@ -1,4 +1,5 @@
-# thepopebot
+# Archemedes
+
 
 **Autonomous AI agents. All the power. None of the leaked API keys.**
 
