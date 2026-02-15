@@ -1,0 +1,1 @@
+Create systemd service configuration for thepopebot Event Handler. Generate the service file, environment configuration, installation scripts, and management utilities. Include proper user setup, logging configuration, and auto-restart policies. Create documentation for installation and usage. Place all files in a new `deployment/systemd/` directory.
